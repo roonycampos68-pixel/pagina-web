@@ -7,6 +7,29 @@
   <link rel="stylesheet" href="primer.css" />
 </head>
 <body>
+  <!-- Modal de Bienvenida -->
+  <div id="welcome-modal" class="modal-overlay">
+    <div class="modal-content card">
+      <h2 class="modal-title">Bienvenido a mi web</h2>
+      <p style="text-align: center; margin-bottom: 1.5rem; color: var(--text-secondary);">Por favor, ingrese sus datos para continuar.</p>
+      <form id="welcome-form">
+        <div class="form-group">
+          <label for="user-name">Nombre de quien accede</label>
+          <input type="text" id="user-name" name="userName" required placeholder="Ej. John Doe">
+        </div>
+        <div class="form-group">
+          <label for="user-color">Elija un color</label>
+          <input type="color" id="user-color" name="userColor" required value="#3b82f6">
+        </div>
+        <div class="form-group">
+          <label for="user-date">Fecha de hoy</label>
+          <input type="date" id="user-date" name="userDate" required>
+        </div>
+        <button type="submit" class="btn-submit">Ingresar al sitio</button>
+      </form>
+    </div>
+  </div>
+
   <a class="skip-link" href="#main">Saltar al contenido</a>
   <header class="site-header" role="banner">
     <h1>Trabajo de Introducción a la Información de Tecnologías</h1>

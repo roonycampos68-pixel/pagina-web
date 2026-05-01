@@ -1,4 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // 0. Lógica del Modal Inicial (Bienvenida)
+    const modalOverlay = document.getElementById("welcome-modal");
+    const welcomeForm = document.getElementById("welcome-form");
+    const dateInput = document.getElementById("user-date");
+
+    // Bloquear el scroll mientras el modal esté abierto
+    document.body.classList.add("no-scroll");
+
+    // Prellenar con la fecha actual por defecto
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    welcomeForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Evitar que la página se recargue
+
+        // Obtener los datos ingresados
+        const userName = document.getElementById("user-name").value;
+        const userColor = document.getElementById("user-color").value;
+        // La fecha ya tiene el 'required' de HTML5
+
+        // --- NUEVO: Enviar datos a Formspree de forma silenciosa ---
+        const formData = new FormData(welcomeForm);
+        try {
+            await fetch("https://formspree.io/f/mvzlgqyq", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            console.log("Datos enviados a Formspree exitosamente.");
+        } catch (error) {
+            console.error("Error al enviar a Formspree:", error);
+        }
+        // -----------------------------------------------------------
+
+        // Ocultar el modal y permitir el scroll
+        modalOverlay.classList.add("hidden");
+        document.body.classList.remove("no-scroll");
+
+        // Como detalle extra: ¡Usar el color elegido como tema para la página!
+        document.documentElement.style.setProperty('--accent-color', userColor);
+        document.documentElement.style.setProperty('--accent-hover', userColor); // Para simplificar
+        // También cambiamos el título principal como saludo
+        const mainTitle = document.querySelector(".site-header h1");
+        if (mainTitle) {
+            mainTitle.textContent = `Bienvenido(a), ${userName}`;
+        }
+    });
+
     // 1. Reloj en tiempo real
     const clockElement = document.getElementById("clock");
     
